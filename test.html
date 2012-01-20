@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="utf-8">
+	<title></title>
+	<meta name="description" content="" />
+  	<meta name="keywords" content="" />
+	<meta name="robots" content="" />
+	<link rel="stylesheet" href="test.css" />
+	<style type="text/css">
+		body, html {
+			background: #000;
+			height: 100%;
+			color: #fff;
+			font-family: Helvetica, Arial, sans-serif;
+		}
+		
+		a {
+			color: #fff;
+		}
+		
+		#loadertarget {
+			width: 100px;
+			height: 100px;
+			background: #ccc url(mhtml:http://dev.fbinhouse.se/spriteloader/test.css!spritepng);
+		}
+	</style>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery.spriteloader.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("#show").click(function(){
+				$("body").showLoader();
+				return false;
+			});
+			$("#hide").click(function(){
+				$("body").hideLoader();
+				return false;
+			});
+			var stl = $("<style></style>")
+				.appendTo("body");
+		});
+	</script>
+</head>
+<body>
+	<a id="show" href="#">$("body").showLoader();</a><br>
+	<a id="hide" href="#">$("body").hideLoader();</a>
+	<div id="loadertarget"></div>
+</body>
+</html>
