@@ -2,11 +2,10 @@
 <html lang="">
 <head>
   <meta charset="utf-8">
-	<title></title>
+	<title>Javascript loader test</title>
 	<meta name="description" content="" />
   	<meta name="keywords" content="" />
 	<meta name="robots" content="" />
-	<link rel="stylesheet" href="test.css" />
 	<style type="text/css">
 		body, html {
 			background: #000;
@@ -22,29 +21,17 @@
 		#loadertarget {
 			width: 100px;
 			height: 100px;
-			background: #ccc url(mhtml:http://dev.fbinhouse.se/spriteloader/test.css!spritepng);
+			background: #ccc;
 		}
 	</style>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script type="text/javascript" src="jquery.spriteloader.js"></script>
-	<script type="text/javascript">
-		$(function() {
-			$("#show").click(function(){
-				$("body").showLoader();
-				return false;
-			});
-			$("#hide").click(function(){
-				$("body").hideLoader();
-				return false;
-			});
-			var stl = $("<style></style>")
-				.appendTo("body");
-		});
-	</script>
 </head>
 <body>
-	<a id="show" href="#">$("body").showLoader();</a><br>
-	<a id="hide" href="#">$("body").hideLoader();</a>
+	<a id="show" href="#" onclick="$('body').showLoader();">$("body").showLoader();</a><br>
+	<a id="hide" href="#" onclick="$('body').hideLoader();">$("body").hideLoader();</a><br>
+	<a id="show" href="#" onclick="$('#loadertarget').showLoader();">$("#loadertarget").showLoader();</a><br>
+	<a id="hide" href="#" onclick="$('#loadertarget').hideLoader();">$("#loadertarget").hideLoader();</a>
 	<div id="loadertarget"></div>
 </body>
 </html>
