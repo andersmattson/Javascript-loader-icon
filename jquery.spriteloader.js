@@ -4,17 +4,15 @@ $.spriteLoaderDataUri = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAr8AAAAlC
 
 $.support.datauri = false;
 
-(function() {
-	var data = new Image();
-	data.onload = data.onerror = function(){
-		if(this.width == 1 && this.height == 1){
-			$.support.datauri = true;
-		}
+var data = new Image();
+data.onload = data.onerror = function(){
+	if(this.width == 1 && this.height == 1){
+		$.support.datauri = true;
 	}
-	data.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-})();
+}
+data.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
 
-$.createLoader = function(op) {
+var createLoader = function(op) {
 	var ops = $.extend(op, {
 		width: '37px',
 		height: '37px',
@@ -37,53 +35,54 @@ $.createLoader = function(op) {
 	}).addClass('spriteloader').data("loader.data", ops);
 }
 
-$.fn.startLoader = function() {
-	var self = this.show();
+var startLoader = function() {
+	var self = this.show(),
+		interval;
 	
 	if(this.data("loader.data").interval)
-		this.stopLoader();
+		stopLoader.apply($(this));
 	
-	var interval = setInterval(function(){
+	interval = setInterval(function(){
 		var ops = self.data("loader.data");
-		var index = ops.index;
-		self.css({backgroundPosition: '-' + ((++ops.index % 19)*37) + 'px top'});
-		self.data("loader.index", ops.index >= 19 ? 0 : ops.index);
+			
+		self.css({backgroundPosition: '-' + ( ( ++ops.index % 19 ) * 37 ) + 'px top'})
+			.data("loader.index", ops.index >= 19 ? 0 : ops.index);
 	}, 40);
 	
-	$(this).data("loader.data").interval = interval;
+	this.data("loader.data").interval = interval;
 
 	return this;
 }
 
-$.fn.stopLoader = function() {
-	if($(this).data("loader.data")) {
-		clearInterval($(this).data("loader.data").interval);
-		
-	}
+var stopLoader = function() {
+	if(this.data("loader.data"))
+		clearInterval(this.data("loader.data").interval);
+
 	return this;
 }
 
 $.fn.showLoader = function(op) {
 
 	if($("> .spriteloader", this).length) {
-		$("> .spriteloader", this).startLoader(op);
+		startLoader.call($("> .spriteloader", this), op);
 		return this;
 	}
 	
-	var loader = $.createLoader(op);
+	var loader = createLoader(op);
 	
-	if($(this).css("position") == "static")
-		$(this).css("position", "relative");
+	// Is this sufficient?
+	if(this.css("position") == "static")
+		this.css("position", "relative");
 
-	$(this).append(loader);
-	loader.startLoader();
+	this.append(loader);
+	startLoader.call(loader);
 	
 	return this;
 }
 
 $.fn.hideLoader = function() {
 	$("> .spriteloader", this).fadeOut("fast", function(){
-		$(this).stopLoader();
+		stopLoader.call($(this));
 		$(this).remove();
 	});
 	return this;
